@@ -29,6 +29,7 @@ app.configure('development', function(){
 });
 
 app.configure('production', function(){
+  mongoose.connect(process.env.MONGOLAB_URI);
   app.use(express.errorHandler());
 });
 
