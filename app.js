@@ -4,6 +4,10 @@
  */
 
 var express = require('express')
+  , Resource = require('express-resource')
+  , mongoose = require('mongoose')
+  , controllers = require('./controllers')
+  , models = require('./models')
   , routes = require('./routes');
 
 var app = module.exports = express.createServer();
@@ -20,6 +24,7 @@ app.configure(function(){
 });
 
 app.configure('development', function(){
+  mongoose.connect('mongodb://localhost/kittenmash');
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
@@ -30,6 +35,7 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', routes.index);
+app.resource('scores', controllers.scores);
 
 app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
