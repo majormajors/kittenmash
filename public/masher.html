@@ -4,29 +4,38 @@
 <script src="masher.js"> </script>
 
 <style>
+body {
+width: 600px;
+margin: auto;
+}
+
 #kmashcont {
 width: 600px;
 margin: auto;
 }
 
 
-/*#kittenmasher {
-cursor: url(images/spiker-small.png);
-}*/
+#kittenmasher {
+cursor: url(images/spiker-small.png) 20 80;
+}
+
 
 .kitten {
 width: 100px;
 height: 100px;
 }
 
-
+#banner {
+width: 600px;
+}
 
 </style>
 </head>
 
 <body onload="start()">
 
-
+<img style="display:none;" id="splatter1" src="images/splatter1.png" />
+<img src="images/banner.png" id="banner" />
 <div class="kmashcont">
 <canvas id="kittenmasher"> </canvas>
 </div>
@@ -37,6 +46,9 @@ height: 100px;
 <img class="kitten" id="kitten3" src="images/600x600/kitten.png"/>
 
 
+
 <h2>Pick your weapon</h2>
+<img class="masher" id="masher1" src="images/spiker-small.png" />
+<img class="masher" id="masher2" src="images/tenderizer-small.png" />
 </body>
 </html>

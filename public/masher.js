@@ -39,12 +39,13 @@ var KittenFrame = C ( function(canvas) {
 },
 {
     init : function (kitten) {
+	this.slices = [];
 	var startPath = new Path();
 	startPath.addPoint(V(0,0));
 	startPath.addPoint(V(0,H));
 	startPath.addPoint(V(W,H));
 	startPath.addPoint(V(W,0));
-	this.slices.push(new KittenPiece(kitten, null ,startPath, V(0,0) ));
+	this.slices.push(new KittenPiece(kitten, null ,startPath, V(0,0), null ));
 	this.background = new Background($("bg"));
 	this.canvas.height = W;
 	this.canvas.width = H;
@@ -160,15 +161,29 @@ var MultiPath = C(function(paths) {
     }
 });
 
+
+function getNiceDivision() {
+    var angle = 0;
+    var div = [];
+    var newAngle;
+    while (angle < 2*pi) {
+	newAngle = angle + Math.random() * pi;
+	if (newAngle > 2*pi) newAngle = 2*pi;
+	div.push([angle, newAngle]);
+	angle = newAngle;
+    }
+    return div;
+}
+
 function makeTriangleInfinite(pt, theta1, theta2) {
     var p = new Path();
     p.addPoint(pt);
-    p.addPoint(pt.add(angleVec(theta1, 1000)).clip());
-    p.addPoint(pt.add(angleVec(theta2, 1000)).clip());
+    p.addPoint(pt.add(angleVec(theta1, 10000)).clip());
+    p.addPoint(pt.add(angleVec(theta2, 10000)).clip());
     return p;
 }
 
-var KittenPiece = C( function(img, borders, clip, transpose) {
+var KittenPiece = C( function(img, borders, clip, transpose, divPt) {
     this.canvas = document.createElement("canvas");
     this.canvas.width = W
     this.canvas.height = H
@@ -184,19 +199,39 @@ var KittenPiece = C( function(img, borders, clip, transpose) {
     this.clip.clip(ctx)
     ctx.drawImage(img, transpose.x, transpose.y);
     ctx.restore();
+    
+    if (borders) {
+	ctx.save();
+	ctx.globalCompositeOperation = "source-atop";
+	borders.transpose(transpose);
+	borders.applyToCanvas(ctx); //hack
+	ctx.strokeStyle = "#f00";
+	ctx.lineWidth = 3;
+	ctx.stroke();
+	
+	ctx.restore();
+    }
+    
+    if (divPt) {
+	ctx.save();
+	var size = 50 + Math.floor(Math.random() * 100);
+	var alpha = Math.random();
+	ctx.globalAlpha = alpha;
+	var splatterLoc = divPt.sub(V(size/2, size/2));
+	ctx.drawImage($("splatter1"), splatterLoc.x, splatterLoc.y, size,size);
+	ctx.restore();
+    }
 },
 {
     render: function(ctx) {
 	ctx.drawImage(this.canvas, 0,0);
     },
     mash: function(pt) {
-	pieces = [[0, 2*pi/3] ,
-		  [2*pi/3, 4*pi/3],
-		  [4*pi/3, 0]]
+	pieces = getNiceDivision();
 	
 	return pieces.map(function(piece) {
 	    return new KittenPiece(this.canvas, makeTriangleInfinite(pt, piece[0], piece[1]), this.clip,
-				   angleVec(piece[0], 5).add(angleVec(piece[1], 5)) )
+				   angleVec(piece[0], 10).add(angleVec(piece[1], 10)), pt )
 
 	}.bind(this))
     },
@@ -215,17 +250,12 @@ var Background = C( function() {
 });
 
 
-function moveMasher(e) {
-    $("masher").style.top = e.pageY+1 + "px"
-    $("masher").style.left = e.pageX+1 + "px"
-}
-
 function start() {
     var kf = new KittenFrame($("kittenmasher"));
     kf.init($("kitten"));
     kf.render();
     $("kittenmasher").addEventListener("click", function(e) {
-	kf.click(V(e.clientX, e.clientY));
+	kf.click(V(e.offsetX, e.offsetY));
     })
 
     /*
@@ -234,15 +264,7 @@ function start() {
     })
     */
     
-    /*
-    $("kittenmasher").observe("mousedown", function() {
-	$("kittenmasher").style.cursor = "url(images/spiker-small2.png)";
-    })
-
-    $("kittenmasher").observe("mouseup", function() {
-	$("kittenmasher").style.cursor = "url(images/spiker-small.png)";
-    })*/
-
+    
 
     $("kitten").observe("click", function() {
 	kf.init($("kitten"));
@@ -257,6 +279,16 @@ function start() {
     $("kitten3").observe("click", function() {
 	kf.init($("kitten3"));
 	kf.render();
+    })
+
+    $("masher1").observe("click", function() {
+	$("kittenmasher").style.cursor = "url(images/spiker-small.png) 20 80";
+	
+	
+    })
+
+    $("masher2").observe("click", function() {
+	$("kittenmasher").style.cursor = "url(images/tenderizer-small.png) 15 34";
     })
 
 }
