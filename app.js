@@ -12,6 +12,8 @@ var express = require('express')
 
 var app = module.exports = express.createServer();
 
+var port = 3000;
+
 // Configuration
 
 app.configure(function(){
@@ -29,6 +31,7 @@ app.configure('development', function(){
 });
 
 app.configure('production', function(){
+  port = process.env.PORT;
   mongoose.connect(process.env.MONGOLAB_URI);
   app.use(express.errorHandler());
 });
@@ -38,6 +41,6 @@ app.configure('production', function(){
 app.get('/', routes.index);
 app.resource('scores', controllers.scores);
 
-app.listen(3000, function(){
+app.listen(port, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
