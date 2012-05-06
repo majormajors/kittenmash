@@ -259,6 +259,23 @@ function start() {
 	kf.render();
     })
 
+    $("publish").observe("click", function() {
+      new Ajax.Request("/scores", {parameters : {nickname: prompt("What is your nickname?"), value: score},
+        onSuccess: function() {
+            new Ajax.Request("/scores", {method: "get", onSuccess: function(json) {
+              var json = json.responseJSON;
+              console.log(json);
+              bestScore = json[0];
+              json.each(function(rec) {
+                if (rec.value > bestScore.value) bestScore = rec;
+              })
+              alert("The best score was by " + bestScore.nickname + " with " + value + " points!");
+            }});
+          }
+        })
+
+    });
+
 }
 
 
