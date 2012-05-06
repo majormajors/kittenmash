@@ -8,6 +8,8 @@ function C(constructor, methods) {
     return rval;
 }
 
+var score = 0;
+
 var Vector = C ( function(x,y) {
     this.x = x;
     this.y = y;
@@ -36,13 +38,13 @@ var KittenFrame = C ( function(canvas) {
     this.canvas = canvas;
 },
 {
-    init : function () {
+    init : function (kitten) {
 	var startPath = new Path();
 	startPath.addPoint(V(0,0));
 	startPath.addPoint(V(0,H));
 	startPath.addPoint(V(W,H));
 	startPath.addPoint(V(W,0));
-	this.slices.push(new KittenPiece($("kitten"), null ,startPath, V(0,0) ));
+	this.slices.push(new KittenPiece(kitten, null ,startPath, V(0,0) ));
 	this.background = new Background($("bg"));
 	this.canvas.height = W;
 	this.canvas.width = H;
@@ -50,12 +52,13 @@ var KittenFrame = C ( function(canvas) {
 
     render : function() {
 	var ctx = this.canvas.getContext("2d");
-	ctx.fillRect(0,0,400,400);
+	ctx.fillRect(0,0,W,H);
 	this.background.render(ctx);
 	this.slices.each( function (slice) { 
 	    slice.render(ctx);
 	}.bind(this));
-
+	
+	
 	//if (this.slices.length == 1) this.slices[0].render(ctx);
 	//else this.slices[2].render(ctx);
     },
@@ -66,6 +69,8 @@ var KittenFrame = C ( function(canvas) {
 	    if (slice.hitDetect(pt)) {
 		mashees = slice.mash(pt);
 		slices_out = slices_out.concat(mashees);
+		score+=100000000;
+		updateScore();
 	    }
 	    else {
 		slices_out.push(slice);
@@ -76,6 +81,10 @@ var KittenFrame = C ( function(canvas) {
     }
     
 });
+
+function updateScore() {
+    $("score").innerHTML = score;
+}
 
 var Kitten = C ( function(img, x,y, w,h) {
     this.img = img;
@@ -213,15 +222,43 @@ function moveMasher(e) {
 
 function start() {
     var kf = new KittenFrame($("kittenmasher"));
-    kf.init();
+    kf.init($("kitten"));
     kf.render();
     $("kittenmasher").addEventListener("click", function(e) {
 	kf.click(V(e.clientX, e.clientY));
     })
 
+    /*
     document.addEventListener("mousemove", function(e) {
 	moveMasher(e);
     })
+    */
+    
+    /*
+    $("kittenmasher").observe("mousedown", function() {
+	$("kittenmasher").style.cursor = "url(images/spiker-small2.png)";
+    })
+
+    $("kittenmasher").observe("mouseup", function() {
+	$("kittenmasher").style.cursor = "url(images/spiker-small.png)";
+    })*/
+
+
+    $("kitten").observe("click", function() {
+	kf.init($("kitten"));
+	kf.render();
+    })
+
+    $("kitten2").observe("click", function() {
+	kf.init($("kitten2"));
+	kf.render();
+    })
+
+    $("kitten3").observe("click", function() {
+	kf.init($("kitten3"));
+	kf.render();
+    })
+
 }
 
 

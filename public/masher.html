@@ -9,16 +9,17 @@ width: 600px;
 margin: auto;
 }
 
-#masher {
-width: 200px;
-height: 200px;
-position: absolute;
-z-index: 1000;
+
+/*#kittenmasher {
+cursor: url(images/spiker-small.png);
+}*/
+
+.kitten {
+width: 100px;
+height: 100px;
 }
 
-body {
-cursor: none;
-}
+
 
 </style>
 </head>
@@ -26,14 +27,15 @@ cursor: none;
 <body onload="start()">
 
 
-
-<img src="images/masher.png" id="masher" />
 <div class="kmashcont">
 <canvas id="kittenmasher"> </canvas>
 </div>
-
+<div class="score">Score: <span id="score">0</span> <button id="publish">Brag About It!</button></div>
 <h2>Pick your kitten</h2>
-<img id="kitten" src="kitten.jpg"  onclick="pickkit()"/>
+<img class="kitten" id="kitten" src="images/600x600/cute-kitten-631-4.png" />
+<img class="kitten" id="kitten2" src="images/600x600/cute-kitten3.png" />
+<img class="kitten" id="kitten3" src="images/600x600/kitten.png"/>
+
 
 <h2>Pick your weapon</h2>
 </body>
