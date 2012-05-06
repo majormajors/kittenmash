@@ -4,11 +4,21 @@
 <script src="masher.js"> </script>
 
 <style>
-kmashcont {
+#kmashcont {
 width: 600px;
 margin: auto;
 }
 
+#masher {
+width: 200px;
+height: 200px;
+position: absolute;
+z-index: 1000;
+}
+
+body {
+cursor: none;
+}
 
 </style>
 </head>
@@ -17,7 +27,7 @@ margin: auto;
 
 
 
-
+<img src="images/masher.png" id="masher" />
 <div class="kmashcont">
 <canvas id="kittenmasher"> </canvas>
 </div>

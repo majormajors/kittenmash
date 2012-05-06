@@ -1,5 +1,5 @@
-W=400
-H=400
+W=600
+H=600
 pi = 3.141592
 function C(constructor, methods) {
     var rval = Class.create();
@@ -39,9 +39,9 @@ var KittenFrame = C ( function(canvas) {
     init : function () {
 	var startPath = new Path();
 	startPath.addPoint(V(0,0));
-	startPath.addPoint(V(0,300));
-	startPath.addPoint(V(300,300));
-	startPath.addPoint(V(300,0));
+	startPath.addPoint(V(0,H));
+	startPath.addPoint(V(W,H));
+	startPath.addPoint(V(W,0));
 	this.slices.push(new KittenPiece($("kitten"), null ,startPath, V(0,0) ));
 	this.background = new Background($("bg"));
 	this.canvas.height = W;
@@ -206,6 +206,11 @@ var Background = C( function() {
 });
 
 
+function moveMasher(e) {
+    $("masher").style.top = e.pageY+1 + "px"
+    $("masher").style.left = e.pageX+1 + "px"
+}
+
 function start() {
     var kf = new KittenFrame($("kittenmasher"));
     kf.init();
@@ -213,4 +218,10 @@ function start() {
     $("kittenmasher").addEventListener("click", function(e) {
 	kf.click(V(e.clientX, e.clientY));
     })
+
+    document.addEventListener("mousemove", function(e) {
+	moveMasher(e);
+    })
 }
+
+
