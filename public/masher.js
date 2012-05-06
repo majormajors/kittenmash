@@ -281,6 +281,7 @@ function start() {
 	kf.render();
     })
 
+
     $("masher1").observe("click", function() {
 	$("kittenmasher").style.cursor = "url(images/spiker-small.png) 20 80";
 	
@@ -290,6 +291,24 @@ function start() {
     $("masher2").observe("click", function() {
 	$("kittenmasher").style.cursor = "url(images/tenderizer-small.png) 15 34";
     })
+
+    $("publish").observe("click", function() {
+      new Ajax.Request("/scores", {parameters : {nickname: prompt("What is your nickname?"), value: score},
+        onSuccess: function() {
+            new Ajax.Request("/scores", {method: "get", onSuccess: function(json) {
+              var json = json.responseJSON;
+              console.log(json);
+              bestScore = json[0];
+              json.each(function(rec) {
+                if (rec.value > bestScore.value) bestScore = rec;
+              })
+              alert("The best score was by " + bestScore.nickname + " with " + value + " points!");
+            }});
+          }
+        })
+
+    });
+
 
 }
 
