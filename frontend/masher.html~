@@ -1,0 +1,13 @@
+<html>
+<head>
+
+</head>
+
+<body>
+
+<img id="kitten" />
+<img id="bg" />
+<canvas id="kittenmasher"> </canvas>
+
+</body>
+</html>

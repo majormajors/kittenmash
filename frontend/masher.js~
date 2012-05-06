@@ -1,0 +1,53 @@
+var Vector = Class { function(x,y) {
+    this.x = x;
+    this.y = y;
+}, {
+    add: function(vec) {
+	return new Vector(this.x + vec.x, this.y + vec.y);
+    },
+    sub:  function (vec) {
+	return new Vector(this.x + vec.x, this.y + vec.y);
+    }
+});
+
+V = function (x,y) { return new Vector(x,y); }
+
+var KittenFrame = Class ( function(canvas) {
+    this.background = null;
+    this.slices = [];
+    this.canvas = canvas;
+},
+{
+    init : {
+	this.slices.add(new Kitten($("kitten"),0,0, 300, 300));
+	this.background = new Background($("bg"));
+	this.canvas.height = 400;
+	this.canvas.width = 400;
+    },
+
+    render : {
+	this.canvas.clearRect(0,0,400,400);
+	this.background.render(this.canvas);
+	this.slices.each( function (slice) { 
+	    slice.render(this.canvas);
+	}.bind(this))
+    }
+});
+
+var Kitten = Class ( function(img, x,y, w,h) {
+    this.img = img;
+    this.pos = V(x,y)
+    this.size = V(w,h)
+}, {
+    render : function(canvas) {
+	canvas.drawImage(img, this.pos.x, this.pos.y, this.pos.w, this.pos.h);
+    }
+});
+
+var Background = Class( function() {
+
+}, {
+    render: function() {
+
+    }
+});
