@@ -38,7 +38,9 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', routes.index);
+app.get('/', function(req, res) {
+  res.redirect('/masher.html');
+});
 app.resource('scores', controllers.scores);
 
 app.listen(port, function(){
