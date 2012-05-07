@@ -7,6 +7,12 @@
 body {
 width: 600px;
 margin: auto;
+background-color: #eee;
+color: #333;
+}
+
+h1,h2,h3,h4,h5,body {
+font-face: Tahoma, "Bitstream Vera Sans", sans-serif;
 }
 
 #kmashcont {
@@ -25,8 +31,24 @@ width: 100px;
 height: 100px;
 }
 
+
+
 #banner {
 width: 600px;
+}
+
+.masher {
+height: 100px;
+}
+
+.kitten, .masher {
+border: 3px #ccc solid;
+margin-left: 20px;
+-webkit-transition: all 0.7s linear;
+}
+
+.masher:hover, .kitten:hover {
+border: 3px #33a solid;
 }
 
 </style>
@@ -35,7 +57,7 @@ width: 600px;
 <body onload="start()">
 
 <img style="display:none;" id="splatter1" src="images/splatter1.png" />
-<img src="images/banner.png" id="banner" />
+<img src="images/banner-sensible.png" id="banner" />
 <div class="kmashcont">
 <canvas id="kittenmasher"> </canvas>
 </div>
@@ -48,7 +70,7 @@ width: 600px;
 
 
 <h2>Pick your weapon</h2>
-<img class="masher" id="masher1" src="images/spiker-small.png" />
-<img class="masher" id="masher2" src="images/tenderizer-small.png" />
+<img class="masher" id="masher1" src="images/spiker-square.png" />
+<img class="masher" id="masher2" src="images/tenderizer-square.png" />
 </body>
 </html>
