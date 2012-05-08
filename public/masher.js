@@ -70,7 +70,7 @@ var KittenFrame = C ( function(canvas) {
 	    if (slice.hitDetect(pt)) {
 		mashees = slice.mash(pt);
 		slices_out = slices_out.concat(mashees);
-		score+=100000000;
+		score+= Math.floor(100000000 * Math.random());
 		updateScore();
 	    }
 	    else {
