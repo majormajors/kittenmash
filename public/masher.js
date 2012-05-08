@@ -281,6 +281,15 @@ function start() {
 	kf.render();
     })
 
+    $("kitten4").observe("click", function() {
+        kf.init($("kitten4"));
+        kf.render();
+    })
+
+    $("kitten5").observe("click", function() {
+        kf.init($("kitten5"));
+        kf.render();
+    })
 
     $("masher1").observe("click", function() {
 	$("kittenmasher").style.cursor = "url(images/spiker-small.png) 20 80";
