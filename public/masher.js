@@ -293,12 +293,22 @@ function start() {
 
     $("masher1").observe("click", function() {
 	$("kittenmasher").style.cursor = "url(images/spiker-small.png) 20 80";
-	
-	
     })
 
     $("masher2").observe("click", function() {
 	$("kittenmasher").style.cursor = "url(images/tenderizer-small.png) 15 34";
+    })
+
+    $("masher3").observe("click", function() {
+	$("kittenmasher").style.cursor = "url(images/brick-small.png) 50 17";
+    })
+
+    $("masher4").observe("click", function() {
+	$("kittenmasher").style.cursor = "url(images/fist-small.png) 22 68";
+    })
+
+    $("masher5").observe("click", function() {
+	$("kittenmasher").style.cursor = "url(images/Monty_python_foot-small.png) 60 65";
     })
 
     $("publish").observe("click", function() {
